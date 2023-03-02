@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-
-import '../database/database_helper.dart';
-import '../models/post_model.dart';
+import 'package:practica1/database/database_helper.dart';
+import 'package:practica1/models/post_model.dart';
+import 'package:practica1/widgets/item_post_widget.dart';
 
 class ListPostScreen extends StatefulWidget {
   const ListPostScreen({super.key});
 
   @override
-  State<ListPostScreen> createState() => ListPostScreenState();
+  State<ListPostScreen> createState() => _ListPostScreenState();
 }
 
-class ListPostScreenState extends State<ListPostScreen> {
+class _ListPostScreenState extends State<ListPostScreen> {
   database_helper? helper;
 
   @override
@@ -19,7 +19,6 @@ class ListPostScreenState extends State<ListPostScreen> {
     helper = database_helper();
   }
 
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: helper!.GETALLPOST(),
@@ -29,12 +28,12 @@ class ListPostScreenState extends State<ListPostScreen> {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               var objPostModel = snapshot.data![index];
-              return Widget;
+              return ItemPostWidget(postModel: objPostModel);
             },
           );
         } else if (snapshot.hasError) {
           return Center(
-            child: Text('Ocurrio un error en la petición'),
+            child: Text('Ocurrió un error en la petición :)'),
           );
         } else {
           return Center(
