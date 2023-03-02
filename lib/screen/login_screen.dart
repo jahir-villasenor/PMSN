@@ -60,97 +60,100 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/fondo_itc.jpg"),
-                    fit: BoxFit.cover,
-                    opacity: 0.4)),
-            child: Responsive(
-              mobile: MobileLoginScreen(
-                  txtEmail: txtEmail,
-                  spaceHorizontal: spaceHorizontal,
-                  txtPass: txtPass,
-                  btnLogin: btnLogin,
-                  btnGoogle: btnGoogle,
-                  btnFacebook: btnFacebook,
-                  txtRegister: txtRegister),
-              tablet: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        const SizedBox(
-                          width: 250,
-                          child: Center(child: Imagen()),
-                        ),
-                      ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/fondo_itc.jpg"),
+                      fit: BoxFit.cover,
+                      opacity: 0.4)),
+              child: Responsive(
+                mobile: MobileLoginScreen(
+                    txtEmail: txtEmail,
+                    spaceHorizontal: spaceHorizontal,
+                    txtPass: txtPass,
+                    btnLogin: btnLogin,
+                    btnGoogle: btnGoogle,
+                    btnFacebook: btnFacebook,
+                    txtRegister: txtRegister),
+                tablet: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          const SizedBox(
+                            width: 250,
+                            child: Center(child: Imagen()),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 450,
-                          child: LoginForm(
-                              txtEmail: txtEmail,
-                              spaceHorizontal: spaceHorizontal,
-                              txtPass: txtPass,
-                              btnLogin: btnLogin,
-                              btnGoogle: btnGoogle,
-                              btnFacebook: btnFacebook,
-                              btnRegister: txtRegister),
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 450,
+                            child: LoginForm(
+                                txtEmail: txtEmail,
+                                spaceHorizontal: spaceHorizontal,
+                                txtPass: txtPass,
+                                btnLogin: btnLogin,
+                                btnGoogle: btnGoogle,
+                                btnFacebook: btnFacebook,
+                                btnRegister: txtRegister),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              desktop: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        const SizedBox(
-                          width: 450,
-                          child: Center(child: Imagen()),
-                        ),
-                      ],
+                  ],
+                ),
+                desktop: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          const SizedBox(
+                            width: 450,
+                            child: Center(child: Imagen()),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 450,
-                          child: LoginForm(
-                              txtEmail: txtEmail,
-                              spaceHorizontal: spaceHorizontal,
-                              txtPass: txtPass,
-                              btnLogin: btnLogin,
-                              btnGoogle: btnGoogle,
-                              btnFacebook: btnFacebook,
-                              btnRegister: txtRegister),
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 450,
+                            child: LoginForm(
+                                txtEmail: txtEmail,
+                                spaceHorizontal: spaceHorizontal,
+                                txtPass: txtPass,
+                                btnLogin: btnLogin,
+                                btnGoogle: btnGoogle,
+                                btnFacebook: btnFacebook,
+                                btnRegister: txtRegister),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          isLoading ? const LoadingModalWidget() : Container()
-        ],
+            isLoading ? const LoadingModalWidget() : Container()
+          ],
+        ),
       ),
     );
   }
