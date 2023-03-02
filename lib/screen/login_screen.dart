@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         buttonType: SocialLoginButtonType.facebook, onPressed: () {});
 
     final txtRegister = Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(8.0),
       child: TextButton(
           onPressed: () {
             Navigator.pushNamed(context, '/register');
@@ -79,7 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   btnFacebook: btnFacebook,
                   txtRegister: txtRegister),
               tablet: Row(
-                children: [
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -192,27 +193,12 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Padding(padding: EdgeInsets.all(8.0)),
         txtEmail,
-        spaceHorizontal,
         txtPass,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-        spaceHorizontal,
         btnLogin,
-        spaceHorizontal,
-        const Text(
-          "or",
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-        spaceHorizontal,
+        const Text("or"),
         btnGoogle,
-        spaceHorizontal,
         btnFacebook,
-        spaceHorizontal,
         btnRegister,
       ],
     );
