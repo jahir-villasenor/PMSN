@@ -60,17 +60,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/fondo_itc.jpg"),
-                      fit: BoxFit.cover,
-                      opacity: 0.4)),
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/fondo_itc.jpg"),
+                    fit: BoxFit.cover,
+                    opacity: 0.4)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Responsive(
                 mobile: MobileLoginScreen(
                     txtEmail: txtEmail,
@@ -151,9 +151,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            isLoading ? const LoadingModalWidget() : Container()
-          ],
-        ),
+          ),
+          isLoading ? const LoadingModalWidget() : Container()
+        ],
       ),
     );
   }
