@@ -92,6 +92,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 250,
                             child: Center(child: Imagen()),
                           ),
+                          const SizedBox(
+                            width: 450,
+                            child: Center(
+                              child: conocenos(),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -125,6 +131,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(
                             width: 450,
                             child: Center(child: Imagen()),
+                          ),
+                          const SizedBox(
+                            width: 450,
+                            child: Center(
+                              child: conocenos(),
+                            ),
                           ),
                         ],
                       ),
@@ -169,6 +181,24 @@ class Imagen extends StatelessWidget {
     return Image.asset(
       'assets/logo_itc.png',
       height: 250,
+    );
+  }
+}
+
+class conocenos extends StatelessWidget {
+  const conocenos({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+      onPressed: () {
+        Navigator.pushNamed(context, '/knows');
+      },
+      label: const Text('Conocenos'),
+      icon: const Icon(Icons.thumb_up),
+      backgroundColor: Color.fromARGB(255, 25, 143, 31),
     );
   }
 }
@@ -232,7 +262,6 @@ class MobileLoginScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Padding(padding: EdgeInsets.all(8.0)),
         Imagen(),
         txtEmail,
         spaceHorizontal,
@@ -245,8 +274,8 @@ class MobileLoginScreen extends StatelessWidget {
         btnGoogle,
         spaceHorizontal,
         btnFacebook,
-        spaceHorizontal,
-        txtRegister
+        txtRegister,
+        conocenos()
       ],
     );
   }
