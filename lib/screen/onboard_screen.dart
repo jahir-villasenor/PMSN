@@ -19,7 +19,7 @@ final datos = [
       backgroundColor: const Color.fromRGBO(17, 34, 11, 1),
       titleColor: Colors.pink,
       subtitleColor: Colors.white,
-      background: LottieBuilder.asset("animations/bg-2.json")),
+      background: LottieBuilder.asset("assets/animations/ba1.json")),
   CardTecnm(
       title: "Page 1",
       subtitle: "Subtitulo 1",
@@ -27,7 +27,7 @@ final datos = [
       backgroundColor: const Color.fromRGBO(75, 226, 61, 1),
       titleColor: Colors.pink,
       subtitleColor: Colors.white,
-      background: LottieBuilder.asset("animations/bg-2.json")),
+      background: LottieBuilder.asset("assets/animations/ba1.json")),
   CardTecnm(
       title: "Page 1",
       subtitle: "Subtitulo 1",
@@ -35,7 +35,7 @@ final datos = [
       backgroundColor: const Color.fromRGBO(173, 87, 29, 1),
       titleColor: Colors.pink,
       subtitleColor: Colors.white,
-      background: LottieBuilder.asset("animations/bg-2.json"))
+      background: LottieBuilder.asset("assets/animations/ba1.json"))
 ];
 
 class _OnBoardScreenState extends State<OnBoardScreen> {
