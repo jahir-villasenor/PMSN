@@ -3,6 +3,7 @@ import 'package:practica1/screen/dashbord_screen.dart';
 import 'package:practica1/screen/login_screen.dart';
 import 'package:practica1/screen/register_screen.dart';
 import 'package:practica1/screen/onboard_screen.dart';
+import 'package:practica1/screen/settings_screen.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
@@ -10,5 +11,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/register': (BuildContext context) => RegisterScreen(),
     '/dash': (BuildContext context) => DashboardScreen(),
     '/knows': (BuildContext context) => OnBoardScreen(),
+    '/settings': (BuildContext context) => SettingsScreen(),
+
   };
 }

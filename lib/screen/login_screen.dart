@@ -26,8 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
           label: Text('Password User'), enabledBorder: OutlineInputBorder()),
     );
 
-    final spaceHorizontal = SizedBox(
-      height: 15,
+    final spaceHorizontal = const SizedBox(
+      height: 8,
     );
 
     final btnLogin = SocialLoginButton(
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () {
           isLoading = true;
           setState(() {});
-          Future.delayed(Duration(milliseconds: 3000)).then((value) {
+          Future.delayed(const Duration(milliseconds: 3000)).then((value) {
             isLoading = false;
             setState(() {});
             Navigator.pushNamed(context, '/dash');
@@ -92,12 +92,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 250,
                             child: Center(child: Imagen()),
                           ),
-                          const SizedBox(
-                            width: 450,
-                            child: Center(
-                              child: conocenos(),
-                            ),
-                          ),
+                          Row(
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              const SizedBox(
+                                width: 400,
+                                child: Center(child: conocenos()),
+                              ),
+                              const SizedBox(
+                                width: 45,
+                                child: Center(child: settings()),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -132,12 +139,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 450,
                             child: Center(child: Imagen()),
                           ),
-                          const SizedBox(
-                            width: 450,
-                            child: Center(
-                              child: conocenos(),
-                            ),
-                          ),
+                          Row(
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              const SizedBox(
+                                width: 400,
+                                child: Center(child: conocenos()),
+                              ),
+                              const SizedBox(
+                                width: 45,
+                                child: Center(child: settings()),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -198,7 +212,24 @@ class conocenos extends StatelessWidget {
       },
       label: const Text('Conocenos'),
       icon: const Icon(Icons.thumb_up),
-      backgroundColor: Color.fromARGB(255, 25, 143, 31),
+      backgroundColor: const Color.fromARGB(255, 25, 143, 31),
+    );
+  }
+}
+
+class settings extends StatelessWidget {
+  const settings({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.pushNamed(context, '/settings');
+      },
+      child: Icon(Icons.settings),
+      backgroundColor: Color.fromARGB(255, 155, 155, 155),
     );
   }
 }
@@ -262,7 +293,7 @@ class MobileLoginScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Imagen(),
+        const Imagen(),
         txtEmail,
         spaceHorizontal,
         txtPass,
@@ -275,7 +306,10 @@ class MobileLoginScreen extends StatelessWidget {
         spaceHorizontal,
         btnFacebook,
         txtRegister,
-        conocenos()
+        Row(
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [const conocenos(), const settings()],
+        ),
       ],
     );
   }
