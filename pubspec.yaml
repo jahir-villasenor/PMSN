@@ -45,6 +45,7 @@ dependencies:
   email_validator: ^2.1.17
   concentric_transition: ^1.0.3
   lottie: ^2.2.0
+  shared_preferences: ^2.0.18
 
 
 dev_dependencies:

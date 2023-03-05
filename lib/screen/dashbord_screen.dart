@@ -34,6 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           label: Text('Post it!')),
       drawer: Drawer(
         child: ListView(
+          // ignore: prefer_const_literals_to_create_immutables
           children: [
             const UserAccountsDrawerHeader(
                 currentAccountPicture: CircleAvatar(
@@ -42,17 +43,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 accountName: Text('Jahir Villaseñor Celorio'),
                 accountEmail: Text('19030919@itcelaya.edu.mx')),
-            DayNightSwitcher(
-              isDarkModeEnabled: isDarkThemeEnable,
-              onStateChanged: (isDarkModeEnabled) {
-                isDarkModeEnabled
-                    ? theme.settthemeData(StylesApp.darkTheme(context))
-                    : theme.settthemeData(StylesApp.lightTheme(context));
-
-                isDarkThemeEnable = isDarkModeEnabled;
-                setState(() {});
-              },
-            ),
           ],
         ),
       ),
