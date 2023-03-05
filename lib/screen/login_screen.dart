@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             // ignore: prefer_const_literals_to_create_immutables
                             children: [
                               const SizedBox(
-                                width: 400,
+                                width: 40,
                                 child: Center(child: conocenos()),
                               ),
                               const SizedBox(
