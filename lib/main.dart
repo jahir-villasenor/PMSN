@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:practica1/provider/flags_provider.dart';
 import 'package:practica1/provider/theme_provider.dart';
 import 'package:practica1/routes.dart';
 import 'package:practica1/screen/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences sharedPreferences= await SharedPreferences.getInstance();
-  final id_tema=sharedPreferences.getInt('id_tema')??0;
-  runApp(MyApp( id_tema :id_tema));
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  final id_tema = sharedPreferences.getInt('id_tema') ?? 0;
+  runApp(MyApp(id_tema: id_tema));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,9 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create:(_)=>ThemeProvider(id_tema,context)
-        ),
+        ChangeNotifierProvider(create: (_) => ThemeProvider(id_tema, context)),
+        ChangeNotifierProvider(create: (_) => FlagsProvider()),
       ],
       child: PMSNApp(),
     );

@@ -85,6 +85,7 @@ class salir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
+      heroTag: salir,
       onPressed: () {
         Navigator.pushNamed(context, '/login');
       },

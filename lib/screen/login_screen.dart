@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           const SizedBox(
-                            width: 250,
+                            width: 150,
                             child: Center(child: Imagen()),
                           ),
                           Row(
@@ -207,6 +207,7 @@ class conocenos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
+      heroTag: conocenos,
       onPressed: () {
         Navigator.pushNamed(context, '/knows');
       },
@@ -225,6 +226,7 @@ class settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: settings,
       onPressed: () {
         Navigator.pushNamed(context, '/settings');
       },
@@ -307,9 +309,8 @@ class MobileLoginScreen extends StatelessWidget {
         btnFacebook,
         txtRegister,
         Row(
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [const conocenos(), const settings()],
-        ),
+          children: const [conocenos(), settings()],
+        )
       ],
     );
   }

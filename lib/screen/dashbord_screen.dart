@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:practica1/settings/style.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/flags_provider.dart';
 import '../provider/theme_provider.dart';
 import '../widgets/modal_add_post.dart';
 import 'list_post_screen.dart';
@@ -20,11 +21,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     ThemeProvider theme = Provider.of<ThemeProvider>(context);
+    FlagsProvider flags = Provider.of<FlagsProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('TecBook'),
+        title: const Text('TecBook'),
       ),
-      body: const ListPostScreen(),
+      body: flags.getupdatePosts() == true
+          ? const ListPostScreen()
+          : const ListPostScreen(),
       floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Colors.green,
           onPressed: () {

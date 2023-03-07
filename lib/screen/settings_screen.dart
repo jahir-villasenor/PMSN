@@ -44,10 +44,11 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30),
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton.extended(
+                  heroTag: Icons.light,
                   onPressed: () {
                     theme.setthemeData(0, context);
                   },
@@ -56,6 +57,7 @@ class SettingsScreen extends StatelessWidget {
                   backgroundColor: Color.fromARGB(255, 141, 141, 141),
                 ),
                 FloatingActionButton.extended(
+                  heroTag: Icons.dark_mode,
                   onPressed: () {
                     theme.setthemeData(1, context);
                   },
@@ -64,6 +66,7 @@ class SettingsScreen extends StatelessWidget {
                   backgroundColor: Color.fromARGB(255, 20, 20, 20),
                 ),
                 FloatingActionButton.extended(
+                  heroTag: Icons.hot_tub,
                   onPressed: () {
                     theme.setthemeData(2, context);
                   },
@@ -78,6 +81,7 @@ class SettingsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton.extended(
+                  heroTag: Icons.save,
                   onPressed: () {
                     Navigator.pushNamed(context, '/login');
                   },
@@ -86,6 +90,7 @@ class SettingsScreen extends StatelessWidget {
                   backgroundColor: Color.fromARGB(255, 55, 202, 80),
                 ),
                 FloatingActionButton.extended(
+                  heroTag: Icons.cancel,
                   onPressed: () {
                     theme.setthemeData(0, context);
                     Navigator.pushNamed(context, '/login');
