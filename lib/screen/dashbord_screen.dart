@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../provider/flags_provider.dart';
 import '../provider/theme_provider.dart';
+import '../widgets/future_modal.dart';
 import '../widgets/modal_add_post.dart';
 import 'list_post_screen.dart';
 
@@ -33,7 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Colors.green,
           onPressed: () {
-            _openCustomDialog();
+            openCustomDialog(context, null);
           },
           icon: Icon(Icons.add_comment),
           label: Text('Post it!')),
@@ -52,26 +53,5 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
     );
-  }
-
-  _openCustomDialog() {
-    return showGeneralDialog(
-        context: context,
-        barrierColor: Colors.black.withOpacity(.5),
-        transitionBuilder: (context, animation, secondaryAnimation, child) {
-          return Transform.scale(
-            scale: animation.value,
-            child: Opacity(
-              opacity: animation.value,
-              child: const ModalAddPost(),
-            ),
-          );
-        },
-        transitionDuration: Duration(milliseconds: 200),
-        barrierDismissible: true,
-        barrierLabel: '',
-        pageBuilder: ((context, animation, secondaryAnimation) {
-          return Container();
-        }));
   }
 }
