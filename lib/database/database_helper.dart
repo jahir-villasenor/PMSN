@@ -5,9 +5,11 @@ import 'package:practica1/models/post_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+import '../models/event_model.dart';
+
 class database_helper {
   static final nombreBD = 'TECBOOKBD';
-  static final versionBD = 1;
+  static final versionBD = 2;
 
   static Database? _database;
 
@@ -27,10 +29,23 @@ class database_helper {
     );
   }
 
-  _createTable(Database db, int version) {
-    String query =
-        'CREATE TABLE tblPost(idPost INTEGER PRIMARY KEY, dscPost VARCHAR(200), datePost DATE)';
-    db.execute(query);
+  _createTable(Database db, int version) async {
+    String query = '''
+      CREATE TABLE tblPost (
+        idPost INTEGER PRIMARY KEY,
+        dscPost VARCHAR(200),
+        datePost DATE
+      );''';
+    await db.execute(query);
+    String query2 = '''
+      CREATE TABLE tblEvents (
+        idEvents INTEGER PRIMARY KEY,
+        dscEvents VARCHAR(200),
+        dateEvents DATE,
+        finished INTEGER
+      );
+    ''';
+    await db.execute(query2);
   }
 
   Future<int> INSERTAR(String table, Map<String, dynamic> map) async {
@@ -53,5 +68,22 @@ class database_helper {
     var conexion = await database;
     var result = await conexion.query('tblPost');
     return result.map((post) => PostModel.fromMap(post)).toList();
+  }
+
+  Future<List<EventModel>> getAllEventos() async {
+    var conexion = await database;
+    var result = await conexion.query('tblEvents');
+    return result.map((evento) => EventModel.fromMap(evento)).toList();
+  }
+
+  Future<List<EventModel>> getEventsForDay(String fecha) async {
+    var conexion = await database;
+    var query = "SELECT * FROM tblEvents where dateEvents=?";
+    var result = await conexion.rawQuery(query, [fecha]);
+    List<EventModel> events = [];
+    if (result != null && result.isNotEmpty) {
+      events = result.map((event) => EventModel.fromMap(event)).toList();
+    }
+    return events;
   }
 }

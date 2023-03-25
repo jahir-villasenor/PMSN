@@ -1,4 +1,3 @@
-import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:practica1/settings/style.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +48,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 accountName: Text('Jahir Villaseñor Celorio'),
                 accountEmail: Text('19030919@itcelaya.edu.mx')),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, '/popular');
+              },
+              horizontalTitleGap: 0.0,
+              leading: const Icon(Icons.movie),
+              title: const Text(
+                'API Movies',
+                style: TextStyle(fontSize: 16),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+            ),
+            ElevatedButton(
+              child: Text(
+                'Mis eventos',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/events');
+              },
+              style: ElevatedButton.styleFrom(
+                  minimumSize: Size(130, 50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20))),
+            ),
           ],
         ),
       ),
