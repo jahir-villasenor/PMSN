@@ -48,20 +48,30 @@ class database_helper {
     await db.execute(query2);
   }
 
-  Future<int> INSERTAR(String table, Map<String, dynamic> map) async {
+  Future<int> INSERTAR(String tblName, Map<String, dynamic> data) async {
     var conexion = await database;
-    return await conexion.insert(table, map);
+    print(data);
+    return await conexion.insert(tblName, data);
   }
 
-  Future<int> ACTUALIZAR(String table, Map<String, dynamic> map) async {
+  Future<int> ACTUALIZAR(
+      String tblName, Map<String, dynamic> data, String idColumnName) async {
     var conexion = await database;
-    return await conexion
-        .update(table, map, where: 'idPost = ?', whereArgs: [map['idPost']]);
+    return await conexion.update(
+      tblName,
+      data,
+      where: '$idColumnName = ?',
+      whereArgs: [data[idColumnName]],
+    );
   }
 
-  Future<int> ELIMINAR(String table, int id) async {
+  Future<int> ELIMINAR(String tblName, int id, String idColumnName) async {
     var conexion = await database;
-    return await conexion.delete(table, where: 'idPost = ?', whereArgs: [id]);
+    return await conexion.delete(
+      tblName,
+      where: '$idColumnName = ?',
+      whereArgs: [id],
+    );
   }
 
   Future<List<PostModel>> GETALLPOST() async {
@@ -73,7 +83,7 @@ class database_helper {
   Future<List<EventModel>> getAllEventos() async {
     var conexion = await database;
     var result = await conexion.query('tblEvents');
-    return result.map((evento) => EventModel.fromMap(evento)).toList();
+    return result.map((event) => EventModel.fromMap(event)).toList();
   }
 
   Future<List<EventModel>> getEventsForDay(String fecha) async {

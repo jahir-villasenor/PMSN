@@ -1,27 +1,26 @@
 class EventModel {
-  int? idEvento;
-  String? descEvento;
-  String? fechaEvento;
-  int? completado;
+  int? idEvents;
+  String? dscEvents;
+  String? dateEvents;
+  int? finished;
 
-  EventModel(
-      {this.idEvento, this.descEvento, this.fechaEvento, this.completado});
+  EventModel({this.idEvents, this.dscEvents, this.dateEvents, this.finished});
 
   factory EventModel.fromMap(Map<String, dynamic> map) {
     return EventModel(
-      idEvento: map['idEvento'],
-      descEvento: map['descEvento'],
-      fechaEvento: map['fechaEvento'],
-      completado: map['completado'] == 1 ? 1 : 0,
+      idEvents: map['idEvents'],
+      dscEvents: map['dscEvents'],
+      dateEvents: map['dateEvents'],
+      finished: map['finished'] == 1 ? 1 : 0,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'idEvento': idEvento,
-      'descEvento': descEvento,
-      'fechaEvento': fechaEvento,
-      'completado': completado == 1 ? 1 : 0,
+      'idEvents': idEvents,
+      'dscEvents': dscEvents,
+      'dateEvents': dateEvents,
+      'finished': finished == 1 ? 1 : 0,
     };
   }
 }

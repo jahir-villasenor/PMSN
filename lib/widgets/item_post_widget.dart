@@ -111,7 +111,7 @@ class ItemPostWidget extends StatelessWidget {
           actions: [
             TextButton(
                 onPressed: () {
-                  _database.ELIMINAR('tblPost', postModel!.idPost!);
+                  _database.ELIMINAR('tblPost', postModel!.idPost!, 'idPost');
                   Navigator.pop(context);
                   flags!.setupdatePosts();
                 },

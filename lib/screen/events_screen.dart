@@ -2,21 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:practica1/database/database_helper.dart';
 import 'package:practica1/models/event_model.dart';
 import 'package:practica1/provider/flags_provider.dart';
+import 'package:practica1/widgets/future_events_modal%20.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:intl/intl.dart';
 
 class EventsScreen extends StatefulWidget {
+  const EventsScreen({super.key});
+
   @override
-  _EventsScreenState createState() => _EventsScreenState();
+  State<EventsScreen> createState() => _EventsScreenState();
 }
 
 class _EventsScreenState extends State<EventsScreen>
     with TickerProviderStateMixin {
+  String? _subjectText = '',
+      _startTimeText = '',
+      _endTimeText = '',
+      _dateText = '',
+      _timeDetails = '';
   CalendarView _calendarView = CalendarView.month;
   Key _calendarKey = UniqueKey();
 
   database_helper? databaseHelper;
+
+  database_helper _database = database_helper();
+
+  EventModel? eventModel;
 
   List<EventModel> _eventModel = [];
 
@@ -80,15 +92,39 @@ class _EventsScreenState extends State<EventsScreen>
       body: SfCalendar(
         key: _calendarKey,
         view: _calendarView,
+        monthViewSettings: const MonthViewSettings(
+            showAgenda: true,
+            showTrailingAndLeadingDates: false,
+            monthCellStyle: MonthCellStyle(
+              backgroundColor: Color.fromARGB(255, 54, 94, 121),
+              todayBackgroundColor: Colors.green,
+              textStyle: TextStyle(fontSize: 12, fontFamily: 'Arial'),
+              todayTextStyle: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Arial'),
+            )),
+        scheduleViewSettings: const ScheduleViewSettings(
+            hideEmptyScheduleWeek: false,
+            monthHeaderSettings: MonthHeaderSettings(
+              height: 70,
+              textAlign: TextAlign.center,
+              backgroundColor: Colors.green,
+            )),
         dataSource: _DataSource(_eventModel),
         onTap: (calendarTapDetails) {
-          if (calendarTapDetails.targetElement ==
-              CalendarElement.calendarCell) {
-            setState(() {
-              _seletedDate = calendarTapDetails.date;
-            });
+          if (CalendarView.month == _calendarView) {
+            if (calendarTapDetails.targetElement ==
+                CalendarElement.calendarCell) {
+              setState(() {
+                _seletedDate = calendarTapDetails.date;
+              });
+            }
+          } else if (CalendarView.schedule == _calendarView) {
+            calendarTapped(calendarTapDetails);
           }
         },
+        cellEndPadding: 40,
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -124,10 +160,9 @@ class _EventsScreenState extends State<EventsScreen>
                             onPressed: () async {
                               if (_controller.text.isNotEmpty) {
                                 final event = EventModel(
-                                    descEvento: _controller.text,
-                                    fechaEvento:
-                                        _seletedDate!.toIso8601String(),
-                                    completado: 0);
+                                    dscEvents: _controller.text,
+                                    dateEvents: _seletedDate!.toIso8601String(),
+                                    finished: 0);
                                 await databaseHelper!
                                     .INSERTAR('tblEvents', event.toMap());
                                 _controller.clear();
@@ -159,21 +194,147 @@ class _EventsScreenState extends State<EventsScreen>
         },
         label: const Text('Add event'),
         icon: const Icon(Icons.add),
+        backgroundColor: Colors.green,
       ),
     );
+  }
+
+  void calendarTapped(CalendarTapDetails details) {
+    final spaceHorizontal = const SizedBox(
+      height: 20,
+    );
+
+    if (details.targetElement == CalendarElement.appointment ||
+        details.targetElement == CalendarElement.agenda) {
+      final Appointment appointmentDetails = details.appointments![0];
+      _subjectText = appointmentDetails.subject;
+      _dateText = DateFormat('MMMM dd, yyyy')
+          .format(appointmentDetails.startTime)
+          .toString();
+      _startTimeText =
+          DateFormat('hh:mm a').format(appointmentDetails.startTime).toString();
+      _endTimeText =
+          DateFormat('hh:mm a').format(appointmentDetails.endTime).toString();
+      _timeDetails = '$_startTimeText - $_endTimeText';
+    } else if (details.targetElement == CalendarElement.calendarCell) {
+      _subjectText = "You have tapped cell";
+      _dateText = DateFormat('MMMM dd, yyyy').format(details.date!).toString();
+      _timeDetails = '';
+    }
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Container(
+              alignment: Alignment.topRight,
+              child: PopupMenuButton(
+                itemBuilder: (context) {
+                  return [
+                    const PopupMenuItem<int>(child: Text('Editar'), value: 0),
+                    const PopupMenuItem<int>(child: Text('Borrar'), value: 1),
+                  ];
+                },
+                onSelected: (value) {
+                  switch (value) {
+                    case 0:
+                      openUpdateEventDialog(context, eventModel);
+                      break;
+
+                    case 1:
+                      openDeleteEventDialog(context, eventModel);
+                      break;
+                  }
+                },
+              ),
+            ),
+            content: Container(
+              height: 120,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        'Descripción: $_subjectText',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: 40,
+                    child: Row(
+                      children: <Widget>[
+                        Text('Fecha: $_dateText',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 10)),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    child: Row(
+                      children: <Widget>[
+                        Text(_timeDetails!,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 10)),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              eventModel?.finished = 1;
+                            });
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Finalizar evento',
+                              style: TextStyle(color: Colors.red)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: new Text('Close'))
+            ],
+          );
+        });
   }
 }
 
 class _DataSource extends CalendarDataSource {
   _DataSource(List<EventModel> eventModel) {
     appointments = eventModel.map((event) {
-      DateTime dateTime = DateTime.parse(event.fechaEvento!);
+      DateTime dateTime = DateTime.parse(event.dateEvents!);
+      int difference = dateTime.difference(DateTime.now()).inDays;
+      Color color = Colors.green;
+      if (difference == 0) {
+        color = Colors.green;
+      } else if (difference < 0 && event.finished! == 0) {
+        color = Colors.red;
+      } else if (difference <= 2) {
+        color = Colors.yellow;
+      }
+
       return Appointment(
           startTime: dateTime,
           endTime: dateTime.add(Duration(hours: 1)),
-          subject: event.descEvento!,
+          subject: event.dscEvents!,
           isAllDay: false,
-          color: event.completado! == 1 ? Colors.grey : Colors.blue);
+          color: color);
     }).toList();
   }
 }

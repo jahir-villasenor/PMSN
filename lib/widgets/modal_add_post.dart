@@ -57,11 +57,16 @@ class _ModalAddPostState extends State<ModalAddPost> {
                       flags.setupdatePosts();
                     });
                   } else {
-                    database!.ACTUALIZAR('tblPost', {
-                      'idPost': widget.postModel!.idPost,
-                      'dscPost': txtDescPost.text,
-                      'datePost': DateTime.now().toString(),
-                    }).then((value) {
+                    database!
+                        .ACTUALIZAR(
+                            'tblPost',
+                            {
+                              'idPost': widget.postModel!.idPost,
+                              'dscPost': txtDescPost.text,
+                              'datePost': DateTime.now().toString(),
+                            },
+                            'idPost')
+                        .then((value) {
                       var msg = value > 0
                           ? 'Registro Actualizado!'
                           : 'Ocurrio un error!';
