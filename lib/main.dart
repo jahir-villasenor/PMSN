@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:practica1/provider/flags_provider.dart';
 import 'package:practica1/provider/theme_provider.dart';
@@ -10,6 +11,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   final id_tema = sharedPreferences.getInt('id_tema') ?? 0;
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp(id_tema: id_tema));
 }
 
