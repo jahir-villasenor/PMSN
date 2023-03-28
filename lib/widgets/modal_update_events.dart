@@ -46,7 +46,7 @@ class _ModalUpdateEventsState extends State<ModalUpdateEvents> {
             ),
             IconButton(
                 onPressed: () {
-                  database!
+                  database
                       .ACTUALIZAR(
                           'tblEvents',
                           {

@@ -3,6 +3,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:practica1/firebase/email_auth.dart';
 import 'package:practica1/widgets/loading_modal_widget.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:email_validator/email_validator.dart';
@@ -35,7 +36,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final spaceHorizontal = SizedBox(
       height: 15,
     );
-
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -150,6 +150,9 @@ class MyCustomForm extends StatefulWidget {
 class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
   String _errorMessage = '';
+  EmailAuth emailAuth = EmailAuth();
+  TextEditingController conEmail = TextEditingController();
+  TextEditingController conPass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +171,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
 
     final txtEmail = TextFormField(
+      controller: conEmail,
       decoration: const InputDecoration(
         icon: Icon(Icons.email),
         hintText: 'Inserte su email',
@@ -185,6 +189,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
 
     final txtPass = TextFormField(
+      controller: conPass,
       obscureText: true,
       decoration: const InputDecoration(
         icon: Icon(Icons.lock),
@@ -208,6 +213,8 @@ class MyCustomFormState extends State<MyCustomForm> {
         buttonType: SocialLoginButtonType.generalLogin,
         onPressed: () {
           if (_formKey.currentState!.validate()) {
+            emailAuth.createUserWithEmailAndPassword(
+                email: conEmail.text, password: conPass.text);
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Processing Data')),
             );
