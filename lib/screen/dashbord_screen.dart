@@ -27,7 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         title: const Text('TecBook'),
       ),
-      body: flags.getupdatePosts() == true
+      body: flags.getflagListPost() == true
           ? const ListPostScreen()
           : const ListPostScreen(),
       floatingActionButton: FloatingActionButton.extended(

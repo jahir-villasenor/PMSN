@@ -1,11 +1,13 @@
+
 import 'package:flutter/material.dart';
 
-class FlagsProvider with ChangeNotifier {
-  bool _updatePosts = false;
+class FlagsProvider with ChangeNotifier
+{
+  bool _flagListPost=false;
 
-  getupdatePosts() => _updatePosts;
-  setupdatePosts() {
-    this._updatePosts = !this._updatePosts;
+  getflagListPost()=> this._flagListPost;
+  setflagListPost(){
+    this._flagListPost=!_flagListPost;
     notifyListeners();
   }
 }

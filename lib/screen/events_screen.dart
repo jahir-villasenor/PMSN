@@ -24,9 +24,9 @@ class _EventsScreenState extends State<EventsScreen>
   CalendarView _calendarView = CalendarView.month;
   Key _calendarKey = UniqueKey();
 
-  database_helper? databaseHelper;
+  DatabaseHelper? databaseHelper;
 
-  database_helper _database = database_helper();
+  DatabaseHelper _database = DatabaseHelper();
 
   EventModel? eventModel;
 
@@ -39,7 +39,7 @@ class _EventsScreenState extends State<EventsScreen>
   @override
   void initState() {
     super.initState();
-    databaseHelper = database_helper();
+    databaseHelper = DatabaseHelper();
     _recuperarEventos();
   }
 
@@ -169,7 +169,7 @@ class _EventsScreenState extends State<EventsScreen>
                                 Navigator.pop(context);
                                 _recuperarEventos();
                                 setState(() {});
-                                flag.setupdatePosts();
+                                flag.setflagListPost();
                               }
                             },
                             child: Text(

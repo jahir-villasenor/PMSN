@@ -7,13 +7,12 @@ import 'package:practica1/screen/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  final id_tema = sharedPreferences.getInt('id_tema') ?? 0;
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp(id_tema: id_tema));
+  SharedPreferences sharedPreferences= await SharedPreferences.getInstance();
+  final id_tema=sharedPreferences.getInt('id_tema')??0;
+  runApp(MyApp( id_tema :id_tema));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,8 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider(id_tema, context)),
-        ChangeNotifierProvider(create: (_) => FlagsProvider()),
+        ChangeNotifierProvider(
+          create:(_)=>ThemeProvider(id_tema,context)
+        ),
+        ChangeNotifierProvider(create: (_)=>FlagsProvider()),
       ],
       child: PMSNApp(),
     );
@@ -32,13 +33,12 @@ class MyApp extends StatelessWidget {
 }
 
 class PMSNApp extends StatelessWidget {
-  PMSNApp({super.key});
+  const PMSNApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    ThemeProvider theme = Provider.of<ThemeProvider>(context);
-
-    return MaterialApp(
+    ThemeProvider theme= Provider.of<ThemeProvider>(context);
+    return  MaterialApp(
       theme: theme.getthemeData(),
       routes: getApplicationRoutes(),
       home: LoginScreen(),

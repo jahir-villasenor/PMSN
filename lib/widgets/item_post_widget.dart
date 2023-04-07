@@ -9,7 +9,7 @@ import 'future_modal.dart';
 class ItemPostWidget extends StatelessWidget {
   ItemPostWidget({super.key, this.postModel});
 
-  database_helper _database = database_helper();
+  DatabaseHelper _database = DatabaseHelper();
   PostModel? postModel;
   FlagsProvider? flags;
 
@@ -113,7 +113,7 @@ class ItemPostWidget extends StatelessWidget {
                 onPressed: () {
                   _database.ELIMINAR('tblPost', postModel!.idPost!, 'idPost');
                   Navigator.pop(context);
-                  flags!.setupdatePosts();
+                  flags!.setflagListPost();
                 },
                 child: const Text('Aceptar')),
             TextButton(

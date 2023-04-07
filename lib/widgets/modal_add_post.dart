@@ -14,13 +14,13 @@ class ModalAddPost extends StatefulWidget {
 }
 
 class _ModalAddPostState extends State<ModalAddPost> {
-  database_helper? database;
+  DatabaseHelper? database;
   TextEditingController txtDescPost = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    database = database_helper();
+    database = DatabaseHelper();
     txtDescPost.text =
         widget.postModel != null ? widget.postModel!.dscPost! : '';
   }
@@ -54,7 +54,7 @@ class _ModalAddPostState extends State<ModalAddPost> {
                       final snackBar = SnackBar(content: Text(msg));
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      flags.setupdatePosts();
+                      flags.setflagListPost();
                     });
                   } else {
                     database!
@@ -73,7 +73,7 @@ class _ModalAddPostState extends State<ModalAddPost> {
                       final snackBar = SnackBar(content: Text(msg));
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      flags.setupdatePosts();
+                      flags.setflagListPost();
                     });
                   }
                 },

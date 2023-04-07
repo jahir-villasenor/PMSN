@@ -13,7 +13,7 @@ class ModalDeleteEvents extends StatefulWidget {
 }
 
 class _ModalDeleteEventsState extends State<ModalDeleteEvents> {
-  final database = database_helper();
+  final database = DatabaseHelper();
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _ModalDeleteEventsState extends State<ModalDeleteEvents> {
                 await database.ELIMINAR(
                     'tblEvents', eventModel!.idEvents!, 'idEvents');
                 Navigator.pop(context);
-                flags.setupdatePosts();
+                flags.setflagListPost();
               },
               child: const Text('Aceptar'),
             ),

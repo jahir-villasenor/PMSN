@@ -5,7 +5,7 @@ import 'package:practica1/screen/login_screen.dart';
 import 'package:practica1/screen/register_screen.dart';
 import 'package:practica1/screen/onboard_screen.dart';
 import 'package:practica1/screen/settings_screen.dart';
-import 'package:practica1/screen/popular_movie_screen.dart';
+import 'package:practica1/screen/movie_list_screen.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
@@ -14,9 +14,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/dash': (BuildContext context) => DashboardScreen(),
     '/knows': (BuildContext context) => OnBoardScreen(),
     '/settings': (BuildContext context) => SettingsScreen(),
-    '/popular': (BuildContext context) => const PopularMoviesScreen(),
+    '/popular': (BuildContext context) => MovieListVideos(),
     '/events': (BuildContext context) => EventsScreen(),
-
-
   };
 }

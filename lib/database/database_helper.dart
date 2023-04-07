@@ -1,14 +1,14 @@
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:practica1/models/post_model.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:practica1/models/post_model.dart';
+import 'package:practica1/models/event_model.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:practica1/models/popular_model.dart';
 
-import '../models/event_model.dart';
-
-class database_helper {
-  static final nombreBD = 'TECBOOKBD';
-  static final versionBD = 2;
+class DatabaseHelper {
+  static final nameDB = 'TECKBOOK';
+  static final versionDB = 4;
 
   static Database? _database;
 
@@ -17,18 +17,17 @@ class database_helper {
     return _database = await _initDatabase();
   }
 
-  Future<Database> _initDatabase() async {
+  _initDatabase() async {
     Directory folder = await getApplicationDocumentsDirectory();
-    String pathBD = join(folder.path, nombreBD);
-
+    String pathDB = join(folder.path, nameDB);
     return await openDatabase(
-      pathBD,
-      version: versionBD,
-      onCreate: _createTable,
+      pathDB,
+      version: versionDB,
+      onCreate: _createTables,
     );
   }
 
-  _createTable(Database db, int version) async {
+  _createTables(Database db, int version) async {
     String query = '''
       CREATE TABLE tblPost (
         idPost INTEGER PRIMARY KEY,
@@ -45,11 +44,26 @@ class database_helper {
       );
     ''';
     await db.execute(query2);
+    String query3 = '''
+      CREATE TABLE tblPopularFav (
+        backdrop_path TEXT,
+        id INTEGER,
+        original_language TEXT,
+        original_title TEXT,
+        overview TEXT,
+        popularity REAL,
+        poster_path TEXT,
+        release_date TEXT,
+        title TEXT,
+        vote_average REAL,
+        vote_count INTEGER
+      );
+    ''';
+    await db.execute(query3);
   }
 
   Future<int> INSERTAR(String tblName, Map<String, dynamic> data) async {
     var conexion = await database;
-    print(data);
     return await conexion.insert(tblName, data);
   }
 
@@ -85,7 +99,23 @@ class database_helper {
     return result.map((event) => EventModel.fromMap(event)).toList();
   }
 
-  Future<List<EventModel>> getEventsForDay(String fecha) async {
+  Future<List<PopularModel>> getAllPopular() async {
+    var conexion = await database;
+    var result = await conexion.query('tblPopularFav');
+    return result.map((popular) => PopularModel.fromMap(popular)).toList();
+  }
+
+  Future<bool> searchPopular(int id_popular) async {
+    var conexion = await database;
+    var query = "SELECT * FROM tblPopularFav where id=?";
+    var result = await conexion.rawQuery(query, [id_popular]);
+    if (result != null && result.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
+   Future<List<EventModel>> getEventsForDay(String fecha) async {
     var conexion = await database;
     var query = "SELECT * FROM tblEvents where dateEvents=?";
     var result = await conexion.rawQuery(query, [fecha]);

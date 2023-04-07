@@ -16,7 +16,7 @@ class ModalUpdateEvents extends StatefulWidget {
 class _ModalUpdateEventsState extends State<ModalUpdateEvents> {
   EventModel? eventModel;
 
-  database_helper database = database_helper();
+  DatabaseHelper database = DatabaseHelper();
   TextEditingController txtDescEvent = TextEditingController();
 
   @override
@@ -63,7 +63,7 @@ class _ModalUpdateEventsState extends State<ModalUpdateEvents> {
                     final snackBar = SnackBar(content: Text(msg));
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    flags.setupdatePosts();
+                    flags.setflagListPost();
                   });
                 },
                 icon: Icon(Icons.add))

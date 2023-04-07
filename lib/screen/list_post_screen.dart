@@ -13,12 +13,12 @@ class ListPostScreen extends StatefulWidget {
 }
 
 class _ListPostScreenState extends State<ListPostScreen> {
-  database_helper? helper;
+  DatabaseHelper? helper;
 
   @override
   void initState() {
     super.initState();
-    helper = database_helper();
+    helper = DatabaseHelper();
   }
 
   Widget build(BuildContext context) {
