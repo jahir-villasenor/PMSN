@@ -60,6 +60,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               trailing: const Icon(Icons.chevron_right),
             ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, '/pokemon');
+              },
+              horizontalTitleGap: 0.0,
+              leading: const Icon(Icons.catching_pokemon),
+              title: const Text(
+                'API Pokémon',
+                style: TextStyle(fontSize: 16),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+            ),
             ElevatedButton(
               child: Text(
                 'Mis eventos',

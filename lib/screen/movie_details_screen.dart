@@ -15,6 +15,11 @@ class MovieDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.green,
+        title: Text(popularModel.title!),
+      ),
       body: Hero(
         tag: popularModel.id!,
         child: Responsive(
@@ -33,10 +38,10 @@ class MovieDetailScreen extends StatelessWidget {
           flex: 1,
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 400,
+                  height: MediaQuery.of(context).size.height,
                   child: Stack(
                     children: [
                       FutureBuilder(
@@ -47,7 +52,7 @@ class MovieDetailScreen extends StatelessWidget {
                               controller: YoutubePlayerController(
                                 initialVideoId: snapshot.data!,
                                 flags: YoutubePlayerFlags(
-                                  autoPlay: true,
+                                  autoPlay: false,
                                   mute: false,
                                   controlsVisibleAtStart: true,
                                 ),
@@ -176,6 +181,8 @@ class MovieDetailScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
@@ -190,14 +197,14 @@ class MovieDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Padding(padding: EdgeInsets.all(5)),
                 Text(
                   popularModel.title!,
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 35,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -219,7 +226,7 @@ class MovieDetailScreen extends StatelessWidget {
                 Text(
                   'Sinopsis',
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -227,7 +234,7 @@ class MovieDetailScreen extends StatelessWidget {
                 Text(
                   popularModel.overview!,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                   ),
                   textAlign: TextAlign.justify,
                 ),
@@ -301,7 +308,7 @@ class MovieDetailScreen extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          flex: 3,
+          flex: 2,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -309,14 +316,14 @@ class MovieDetailScreen extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                        'https://image.tmdb.org/t/p/w500/' +
-                            popularModel.posterPath!,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                        image: NetworkImage(
+                          'https://image.tmdb.org/t/p/w500/' +
+                              popularModel.posterPath!,
+                        ),
+                        fit: BoxFit.cover,
+                        opacity: 0.4),
                   ),
-                  height: 250,
+                  height: MediaQuery.of(context).size.height,
                   child: Stack(
                     children: [
                       FutureBuilder(
@@ -327,7 +334,7 @@ class MovieDetailScreen extends StatelessWidget {
                               controller: YoutubePlayerController(
                                 initialVideoId: snapshot.data.toString(),
                                 flags: YoutubePlayerFlags(
-                                  autoPlay: true,
+                                  autoPlay: false,
                                   mute: false,
                                   controlsVisibleAtStart: true,
                                 ),
@@ -370,7 +377,7 @@ class MovieDetailScreen extends StatelessWidget {
                   Text(
                     popularModel.title!,
                     style: TextStyle(
-                      color: Colors.yellow,
+                      color: Colors.black,
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
