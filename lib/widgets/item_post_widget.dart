@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practica1/database/database_helper.dart';
+import 'package:practica1/firebase/port_collection.dart';
 import 'package:provider/provider.dart';
 
 import '../models/post_model.dart';
@@ -12,6 +13,7 @@ class ItemPostWidget extends StatelessWidget {
   DatabaseHelper _database = DatabaseHelper();
   PostModel? postModel;
   FlagsProvider? flags;
+  PostCollection? postCollection = PostCollection();
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +113,8 @@ class ItemPostWidget extends StatelessWidget {
           actions: [
             TextButton(
                 onPressed: () {
-                  _database.ELIMINAR('tblPost', postModel!.idPost!, 'idPost');
+                  postCollection!.deletePost(postModel!.idPost!);
+                  //_database.ELIMINAR('tblPost', postModel!.idPost!, 'idPost');
                   Navigator.pop(context);
                   flags!.setflagListPost();
                 },

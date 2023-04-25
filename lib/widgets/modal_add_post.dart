@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practica1/database/database_helper.dart';
 import 'package:provider/provider.dart';
+import '../firebase/port_collection.dart';
 import '../models/post_model.dart';
 import '../provider/flags_provider.dart';
 
@@ -14,6 +15,7 @@ class ModalAddPost extends StatefulWidget {
 }
 
 class _ModalAddPostState extends State<ModalAddPost> {
+  PostCollection? postCollection;
   DatabaseHelper? database;
   TextEditingController txtDescPost = TextEditingController();
 
@@ -21,6 +23,7 @@ class _ModalAddPostState extends State<ModalAddPost> {
   void initState() {
     super.initState();
     database = DatabaseHelper();
+    postCollection = PostCollection();
     txtDescPost.text =
         widget.postModel != null ? widget.postModel!.dscPost! : '';
   }
@@ -44,7 +47,21 @@ class _ModalAddPostState extends State<ModalAddPost> {
             IconButton(
                 onPressed: () {
                   if (widget.postModel == null) {
-                    database!.INSERTAR('tblPost', {
+                    postCollection!
+                        .insertPost(
+                      PostModel(
+                          dscPost: txtDescPost.text,
+                          datePost: DateTime.now().toString()),
+                    )
+                        .then((value) {
+                      var msg = 'Registro insertado!';
+                      final snackBar = SnackBar(content: Text(msg));
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      flags.setflagListPost();
+                    });
+
+                    /*database!.INSERTAR('tblPost', {
                       'dscPost': txtDescPost.text,
                       'datePost': DateTime.now().toString(),
                     }).then((value) {
@@ -55,9 +72,23 @@ class _ModalAddPostState extends State<ModalAddPost> {
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       flags.setflagListPost();
-                    });
+                    });*/
                   } else {
-                    database!
+                    postCollection!
+                        .updatePost(
+                      PostModel(
+                          dscPost: txtDescPost.text,
+                          datePost: DateTime.now().toString()),
+                      widget.postModel!.idPost.toString(),
+                    )
+                        .then((value) {
+                      var msg = 'Registro Actualizado!';
+                      final snackBar = SnackBar(content: Text(msg));
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      flags.setflagListPost();
+                    });
+                    /* database!
                         .ACTUALIZAR(
                             'tblPost',
                             {
@@ -74,7 +105,7 @@ class _ModalAddPostState extends State<ModalAddPost> {
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       flags.setflagListPost();
-                    });
+                    });*/
                   }
                 },
                 icon: Icon(Icons.add))

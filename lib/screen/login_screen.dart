@@ -3,6 +3,10 @@ import 'package:practica1/responsive.dart';
 import 'package:practica1/widgets/loading_modal_widget.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 
+import '../firebase/email_auth.dart';
+import '../firebase/facebook_auth.dart';
+import '../firebase/google_auth.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -12,6 +16,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
+  EmailAuth emailAuth = EmailAuth();
+  GoogleAuth googleAuth = GoogleAuth();
+  FaceAuth faceAuth = FaceAuth();
+  TextEditingController? txtemailCont = TextEditingController();
+  TextEditingController? txtPassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,22 +40,68 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     final btnLogin = SocialLoginButton(
-        buttonType: SocialLoginButtonType.generalLogin,
-        onPressed: () {
-          isLoading = true;
-          setState(() {});
-          Future.delayed(const Duration(milliseconds: 3000)).then((value) {
-            isLoading = false;
-            setState(() {});
+      buttonType: SocialLoginButtonType.generalLogin,
+      onPressed: () {
+        isLoading = true;
+        setState(() {});
+        print(txtemailCont!.text);
+        print(txtPassController!.text);
+        emailAuth!
+            .singInWithEmailAndPassword(
+                email: txtemailCont!.text, password: txtPassController!.text)
+            .then((value) {
+          if (value) {
             Navigator.pushNamed(context, '/dash');
-          });
+            isLoading = false;
+          } else {
+            isLoading = false;
+            SnackBar(
+              content: Text('Verifica tus credenciales'),
+            );
+          }
         });
+      },
+    );
 
     final btnGoogle = SocialLoginButton(
-        buttonType: SocialLoginButtonType.google, onPressed: () {});
+      buttonType: SocialLoginButtonType.google,
+      onPressed: () async {
+        isLoading = true;
+        setState(() {});
+        await googleAuth.signInWithGoogle().then((value) {
+          if (value.name != null) {
+            isLoading = false;
+            Navigator.pushNamed(context, '/dash', arguments: value);
+          } else {
+            isLoading = false;
+            setState(() {});
+            SnackBar(
+              content: Text('Verifica tus credenciales'),
+            );
+          }
+        });
+      },
+    );
 
     final btnFacebook = SocialLoginButton(
-        buttonType: SocialLoginButtonType.facebook, onPressed: () {});
+      buttonType: SocialLoginButtonType.facebook,
+      onPressed: () async {
+        isLoading = true;
+        setState(() {});
+        faceAuth.signInWithFacebook().then((value) {
+          if (value.name != null) {
+            Navigator.pushNamed(context, '/dash', arguments: value);
+            isLoading = false;
+          } else {
+            isLoading = false;
+            SnackBar(
+              content: Text('Verifica tus credenciales'),
+            );
+          }
+          setState(() {});
+        });
+      },
+    );
 
     final txtRegister = Padding(
       padding: const EdgeInsets.all(8.0),

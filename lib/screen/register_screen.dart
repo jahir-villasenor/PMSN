@@ -8,6 +8,9 @@ import 'package:practica1/widgets/loading_modal_widget.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:email_validator/email_validator.dart';
 
+import '../firebase/facebook_auth.dart';
+import '../firebase/google_auth.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -153,6 +156,8 @@ class MyCustomFormState extends State<MyCustomForm> {
   EmailAuth emailAuth = EmailAuth();
   TextEditingController conEmail = TextEditingController();
   TextEditingController conPass = TextEditingController();
+  GoogleAuth googleAuth = GoogleAuth();
+  FaceAuth faceAuth = FaceAuth();
 
   @override
   Widget build(BuildContext context) {
@@ -209,6 +214,33 @@ class MyCustomFormState extends State<MyCustomForm> {
       height: 15,
     );
 
+    final btnGoogle = SocialLoginButton(
+      buttonType: SocialLoginButtonType.google,
+      text: 'Continue with Google',
+      onPressed: () {
+        googleAuth.registerWithGoogle().then((value) {
+          if (value) {
+            print('Registro con exito');
+          } else {
+            print('ocurrio un error xd');
+          }
+        });
+      },
+    );
+    final btnFacebook = SocialLoginButton(
+      buttonType: SocialLoginButtonType.facebook,
+      text: 'Continue with Facebook',
+      onPressed: () {
+        faceAuth.signUpWithFacebook().then((value) {
+          if (value) {
+            print('Registro con exito');
+          } else {
+            print('ocurrio un error xd');
+          }
+        });
+      },
+    );
+
     final btnRegister = SocialLoginButton(
         buttonType: SocialLoginButtonType.generalLogin,
         onPressed: () {
@@ -233,6 +265,8 @@ class MyCustomFormState extends State<MyCustomForm> {
           txtPass,
           spaceHorizontal,
           btnRegister,
+          btnGoogle,
+          btnFacebook,
         ],
       ),
     );

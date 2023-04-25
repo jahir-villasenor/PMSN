@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:practica1/screen/list_post_cloud_screen.dart';
 import 'package:practica1/settings/style.dart';
 import 'package:provider/provider.dart';
 
+import '../firebase/facebook_auth.dart';
+import '../firebase/google_auth.dart';
+import '../models/user_model.dart';
 import '../provider/flags_provider.dart';
 import '../provider/theme_provider.dart';
 import '../widgets/future_modal.dart';
@@ -17,9 +21,15 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   bool isDarkThemeEnable = false;
+  GoogleAuth googleAuth = GoogleAuth();
+  FaceAuth faceAuth = FaceAuth();
+  UserModel? user;
 
   @override
   Widget build(BuildContext context) {
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      user = ModalRoute.of(context)!.settings.arguments as UserModel;
+    }
     ThemeProvider theme = Provider.of<ThemeProvider>(context);
     FlagsProvider flags = Provider.of<FlagsProvider>(context);
 
@@ -27,9 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         title: const Text('TecBook'),
       ),
-      body: flags.getflagListPost() == true
-          ? const ListPostScreen()
-          : const ListPostScreen(),
+      body: ListPostCloudScreen(),
       floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Colors.green,
           onPressed: () {
@@ -41,13 +49,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: ListView(
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            const UserAccountsDrawerHeader(
+            UserAccountsDrawerHeader(
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://media.tenor.com/3sRGst4MU7AAAAAM/minecraft-minecraft-online.gif'),
+                  backgroundImage: NetworkImage(user!.photoUrl.toString()),
                 ),
-                accountName: Text('Jahir Villaseñor Celorio'),
-                accountEmail: Text('19030919@itcelaya.edu.mx')),
+                accountName: Text(user!.name.toString()),
+                accountEmail: Text(user!.email.toString())),
             ListTile(
               onTap: () {
                 Navigator.pushNamed(context, '/popular');
@@ -73,6 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               trailing: const Icon(Icons.chevron_right),
             ),
             ElevatedButton(
+              // ignore: sort_child_properties_last
               child: Text(
                 'Mis eventos',
                 style: Theme.of(context).textTheme.bodyLarge,
@@ -84,6 +92,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   minimumSize: Size(130, 50),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20))),
+            ),
+            ListTile(
+              onTap: () {
+                try {
+                  googleAuth.signOutWithGoogle().then((value) {
+                    if (value) {
+                      Navigator.pushNamed(context, '/login');
+                    } else {
+                      print('no');
+                    }
+                  });
+                  faceAuth.signOut().then((value) {
+                    if (value) {
+                      Navigator.pushNamed(context, '/login');
+                    } else {
+                      print('no');
+                    }
+                  });
+                } catch (e) {
+                  print(e);
+                }
+              },
+              title: const Text('Logout'),
+              leading: const Icon(Icons.logout),
             ),
           ],
         ),
