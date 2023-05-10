@@ -25,11 +25,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final txtEmail = TextFormField(
+      controller: txtemailCont,
       decoration: const InputDecoration(
           label: Text('Email User'), enabledBorder: OutlineInputBorder()),
     );
 
     final txtPass = TextFormField(
+      controller: txtPassController,
       obscureText: true,
       decoration: const InputDecoration(
           label: Text('Password User'), enabledBorder: OutlineInputBorder()),
@@ -40,28 +42,35 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     final btnLogin = SocialLoginButton(
-      buttonType: SocialLoginButtonType.generalLogin,
-      onPressed: () {
-        isLoading = true;
-        setState(() {});
-        print(txtemailCont!.text);
-        print(txtPassController!.text);
-        emailAuth!
-            .singInWithEmailAndPassword(
-                email: txtemailCont!.text, password: txtPassController!.text)
-            .then((value) {
-          if (value) {
+        buttonType: SocialLoginButtonType.generalLogin,
+        onPressed: () {
+          isLoading = true;
+          setState(() {});
+          /*Future.delayed(Duration(milliseconds: 4000)).then((value) {
+            isLoading = false;
+            setState(() {});
             Navigator.pushNamed(context, '/dash');
-            isLoading = false;
-          } else {
-            isLoading = false;
-            SnackBar(
-              content: Text('Verifica tus credenciales'),
-            );
-          }
+          });*/
+          print(txtemailCont!.text);
+          print(txtPassController!.text);
+          emailAuth
+              .signInWithEmailAndPassword(
+                  email: txtemailCont!.text, password: txtPassController!.text)
+              .then((value) {
+            if (value) {
+              isLoading = false;
+              setState(() {});
+              Navigator.pushNamed(context, '/dash');
+            } else {
+              isLoading = false;
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('El correo no esta registrado')),
+              );
+              setState(() {});
+              //snackbar error
+            }
+          });
         });
-      },
-    );
 
     final btnGoogle = SocialLoginButton(
       buttonType: SocialLoginButtonType.google,

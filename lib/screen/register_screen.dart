@@ -243,13 +243,27 @@ class MyCustomFormState extends State<MyCustomForm> {
 
     final btnRegister = SocialLoginButton(
         buttonType: SocialLoginButtonType.generalLogin,
+        text: 'Sign up',
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            emailAuth.createUserWithEmailAndPassword(
-                email: conEmail.text, password: conPass.text);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Processing Data')),
-            );
+            emailAuth
+                .registerWithEmailAndPassword(
+                    email: conEmail.text, password: conPass.text)
+                .then((value) {
+              if (value) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('Usuario registrado correctamente')),
+                );
+                Navigator.pushNamed(context, '/login');
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text(
+                          'Ya existe un usuario registrado con esta cuenta')),
+                );
+              }
+            });
           }
         });
     return Form(

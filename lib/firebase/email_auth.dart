@@ -1,30 +1,46 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class EmailAuth {
-  final emailAuth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<bool> createUserWithEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<bool> registerWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     try {
-      final userCredential = await emailAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      final UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
       userCredential.user!.sendEmailVerification();
+      print('User registered: ${userCredential.user}');
       return true;
-    } catch (e) {}
-
-    return false;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+      return false;
+    }
   }
 
-  Future<bool> singInWithEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<bool> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    print(email);
+    print(password);
     try {
-      final userCredential = await emailAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      if (userCredential.user!.emailVerified) {
-        return true;
+      final UserCredential userCredential = await _auth
+          .signInWithEmailAndPassword(email: email, password: password);
+      print('User logged in: ${userCredential.user}');
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
       }
-    } catch (e) {}
-    return false;
-    
+      return false;
+    }
   }
 }

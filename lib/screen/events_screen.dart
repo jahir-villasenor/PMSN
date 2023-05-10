@@ -248,7 +248,7 @@ class _EventsScreenState extends State<EventsScreen>
               ),
             ),
             content: Container(
-              height: 120,
+              height: 150,
               child: Column(
                 children: <Widget>[
                   Row(

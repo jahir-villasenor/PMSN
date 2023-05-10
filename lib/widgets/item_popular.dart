@@ -49,7 +49,7 @@ class _ItemPopularState extends State<ItemPopular> {
                       if (snapshot.data != true) {
                         databaseHelper
                             .INSERTAR(
-                                'tblPopularFav', widget.popularModel!.toMap())
+                                'tblPopularFav', widget.popularModel.toMap())
                             .then((value) => flag.setflagListPost());
                       } else {
                         databaseHelper
