@@ -93,6 +93,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20))),
             ),
+            ElevatedButton(
+              // ignore: sort_child_properties_last
+              child: Text(
+                'About Us',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/aboutus');
+              },
+              style: ElevatedButton.styleFrom(
+                  minimumSize: Size(130, 50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20))),
+            ),
             ListTile(
               onTap: () {
                 try {

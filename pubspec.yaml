@@ -57,6 +57,10 @@ dependencies:
   fluttertoast: ^8.2.1
   awesome_dialog: ^3.0.2
   cloud_firestore: ^4.5.0
+  google_maps_flutter: ^2.2.5
+  circular_menu: ^2.0.1
+
+
 
 
 

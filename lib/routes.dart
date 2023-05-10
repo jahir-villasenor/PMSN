@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica1/screen/aboutus_screen.dart';
 import 'package:practica1/screen/dashbord_screen.dart';
 import 'package:practica1/screen/events_screen.dart';
 import 'package:practica1/screen/login_screen.dart';
@@ -18,5 +19,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/popular': (BuildContext context) => MovieListVideos(),
     '/events': (BuildContext context) => EventsScreen(),
     '/pokemon': (BuildContext context) => PokemonListView(),
+    '/aboutus': (BuildContext context) => AboutUsScreen(),
   };
 }
