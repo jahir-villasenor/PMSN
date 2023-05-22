@@ -220,9 +220,16 @@ class MyCustomFormState extends State<MyCustomForm> {
       onPressed: () {
         googleAuth.registerWithGoogle().then((value) {
           if (value) {
-            print('Registro con exito');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('User successfully registered')),
+            );
+            Navigator.pushNamed(context, '/login');
           } else {
-            print('ocurrio un error xd');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text(
+                      'There is already a registered user with this account')),
+            );
           }
         });
       },
@@ -233,9 +240,16 @@ class MyCustomFormState extends State<MyCustomForm> {
       onPressed: () {
         faceAuth.signUpWithFacebook().then((value) {
           if (value) {
-            print('Registro con exito');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('User successfully registered')),
+            );
+            Navigator.pushNamed(context, '/login');
           } else {
-            print('ocurrio un error xd');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text(
+                      'There is already a registered user with this account')),
+            );
           }
         });
       },
